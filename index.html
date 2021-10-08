@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2P Game</title>
+</head>
+
+<body>
+    <div id="game_message">Start Game</div>
+    <hr>
+    <button onclick="startGame()">Start Game</button>
+    <button onclick="resetGame()">Reset Game</button>
+    <div><span>Player 1 - Won: </span><span id="player1">0</span></div>
+    <div><span>Player 2 - Won: </span><span id="player2">0</span></div>
+    <div id="message"></div>
+    <script>
+        function resetGame() {
+            document.getElementById("player1").innerText = "0";
+            document.getElementById("player2").innerText = "0";
+            document.getElementById("message").innerText = "";
+            document.getElementById("game_message").innerText = "Start Game";
+        }
+        function startGame() {
+            if (parseInt(document.getElementById("player1").innerText) + parseInt(document.getElementById("player2").innerText) === 5) {
+                document.getElementById("message").innerText = "Start the Game Again!";
+                return;
+            }
+            if (parseInt(document.getElementById("player1").innerText) === 3) {
+                document.getElementById("message").innerText = "Player 1 Won! Start the game again.";
+                return;
+            }
+            if (parseInt(document.getElementById("player2").innerText) === 3) {
+                document.getElementById("message").innerText = "Player 2 Won! Start the game again.";
+                return;
+            }
+
+            let player1Health = 100;
+            let player2Health = 100;
+            let player1Point, player2Point;
+            while (player1Health > 0 && player2Health > 0) {
+                let randomAttackFromPlayer1 = Math.round(Math.random() * 100) % 5;
+                let randomAttackFromPlayer2 = Math.round(Math.random() * 100) % 5;
+                player2Health -= randomAttackFromPlayer1;
+                player1Health -= randomAttackFromPlayer2;
+            }
+            // console.log(player1Health + " " + player2Health);
+            if (player1Health == player2Health) {
+                return;
+            } else {
+                if (player2Health <= 0) {
+                    let num = parseInt(document.getElementById("player1").innerText);
+                    // console.log(num);
+                    num += 1;
+                    player1Point = num;
+                    document.getElementById("player1").innerText = num;
+                } else {
+                    let num = parseInt(document.getElementById("player2").innerText);
+                    // console.log(num);
+                    num += 1;
+                    player2Point = num;
+                    document.getElementById("player2").innerText = num;
+                }
+            }
+            document.getElementById("game_message").innerText = "Game " + (parseInt(document.getElementById("player1").innerText) + parseInt(document.getElementById("player2").innerText));
+            if (player1Point === 3) {
+                document.getElementById("message").innerText = "Player 1 Won!";
+            } else if (player2Point === 3) {
+                document.getElementById("message").innerText = "Player 2 Won!";
+            } else {
+                return;
+            }
+        }
+    </script>
+</body>
+
+</html>
